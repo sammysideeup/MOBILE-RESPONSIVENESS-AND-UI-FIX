@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    //Admin Account
+    // Admin Account
     $admin_email = "admin@ecg.com";
     $admin_password = "admin123";
 
@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    // Regular user login
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+    // Regular user login - SELECT THE ID COLUMN
+    $stmt = $conn->prepare("SELECT id, email, password FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -30,28 +30,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
 
-        // ✅ store email in session
         if (password_verify($password, $row['password'])) {
+            // ✅ Store BOTH email AND the user's id
             $_SESSION['email'] = $email; 
+            $_SESSION['user_id'] = $row['id']; // This is the key fix!
+            
             header("Location: membership.php");
             exit();
         } else {
             $_SESSION['error_message'] = 'Incorrect password';
         }
     } else {
-        // 👤 Trainer login (check trainers table)
-        $stmt_trainer = $conn->prepare("SELECT * FROM trainers WHERE email = ? AND password = ?");
-        $stmt_trainer->bind_param("ss", $email, $password); // Assumes trainer passwords are stored in plaintext (not recommended—consider hashing)
+        // 👤 Trainer login
+        $stmt_trainer = $conn->prepare("SELECT trainer_id, name, email, password FROM trainers WHERE email = ?");
+        $stmt_trainer->bind_param("s", $email);
         $stmt_trainer->execute();
         $trainer_result = $stmt_trainer->get_result();
 
         if ($trainer_result->num_rows === 1) {
             $trainer = $trainer_result->fetch_assoc();
-            $_SESSION['trainer_id'] = $trainer['trainer_id'];
-            $_SESSION['trainer_name'] = $trainer['name'];
-            $_SESSION['role'] = 'trainer';
-            header("Location: Trainerdashboard.php");
-            exit();
+            
+            if ($password === $trainer['password']) {
+                $_SESSION['trainer_id'] = $trainer['trainer_id'];
+                $_SESSION['trainer_name'] = $trainer['name'];
+                $_SESSION['email'] = $trainer['email'];
+                $_SESSION['role'] = 'trainer';
+                header("Location: Trainerdashboard.php");
+                exit();
+            } else {
+                $_SESSION['error_message'] = 'Incorrect password';
+            }
         } else {
             $_SESSION['error_message'] = 'Email not found';
         }
@@ -84,7 +92,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
         }
         
         /* Animation for card entrance */
@@ -125,20 +132,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         @media (max-width: 768px) {
             .mobile-navbar {
                 display: block;
-            }
-            
-            body {
-                padding-top: 80px;
-                align-items: flex-start;
-                min-height: 100vh;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            body {
-                padding-top: 70px;
-                padding-left: 15px;
-                padding-right: 15px;
             }
         }
         
@@ -200,30 +193,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 display: none;
             }
         }
-        
-        /* Mobile responsiveness improvements */
-        @media (max-width: 768px) {
-            main {
-                width: 100%;
-                max-width: 400px;
-                margin: 0 auto;
-            }
-            
-            .wrapper {
-                width: 100%;
-                margin: 0 auto;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .wrapper {
-                padding: 25px 30px;
-            }
-            
-            .wrapper h1 {
-                font-size: 1.8rem;
-            }
-        }
     </style>
 </head>
 <body>
@@ -272,7 +241,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
 
         <div class="remember-forgot">
-            <a href="Forgotpass.php" style="color: #000000; font-weight: 500;">Forgot password?</a>
+            <a href="Forgetpass.php" style="color: #000000; font-weight: 500;">Forgot password?</a>
         </div>
 
         <button type="submit" class="btn" style="background-color: #000000; color: #FFD700; font-weight: 700;">Login</button>
@@ -344,13 +313,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             showToast('<?php echo $_SESSION['error_message']; ?>');
             <?php unset($_SESSION['error_message']); ?>
         <?php endif; ?>
-        
-        // Mobile responsiveness: Prevent zoom on input focus
-        document.addEventListener('touchstart', function(e) {
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') {
-                document.body.style.zoom = "100%";
-            }
-        }, { passive: true });
     });
 </script>
 
