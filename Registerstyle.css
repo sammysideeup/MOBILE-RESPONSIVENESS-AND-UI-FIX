@@ -1,0 +1,599 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpAndFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------------------------------- */
+/* 1. BASE STYLING & BODY (UPDATED to match Loginpage.php) */
+/* ---------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  
+  /* Match Loginpage.php background */
+  background-color: #ffffff;
+  
+  /* ⭐ ANIMATION: Smooth Fade-In for the entire page background ⭐ */
+  animation: fadeIn 0.8s ease-out forwards;
+  position: relative;
+  z-index: 0;
+}
+
+/* ---------------------------------- */
+/* 2. WRAPPER (FORM CARD) STYLING (UPDATED to match Loginpage.php) */
+/* ---------------------------------- */
+.wrapper {
+  width: 420px;
+  
+  /* Match Loginpage.php card background */
+  background: #ffffff;
+  
+  color: #333;
+  padding: 30px 40px;
+  border-radius: 1rem;
+  /* Updated shadow to match Loginpage.php cards */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  
+  z-index: 2;
+  position: relative;
+  border: 1px solid #e5e5e5;
+  transition: all 0.3s ease;
+  
+  /* ⭐ ANIMATION: Slide Up and Fade In for the form box ⭐ */
+  animation: slideUpAndFadeIn 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+.wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border: 2px solid #FFD700;
+}
+
+.wrapper h1 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #000000;
+  font-weight: 900;
+  position: relative;
+  padding-bottom: 15px;
+}
+
+.wrapper h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: #FFD700;
+  border-radius: 2px;
+}
+
+.wrapper p {
+  text-align: center;
+  font-size: 0.9em;
+  margin-bottom: 30px;
+  padding: 0 20px;
+}
+
+.back-icon {
+  position: fixed;
+  top: 35px;
+  left: 20px;
+  font-size: 24px;
+  color: #000000;
+  text-decoration: none;
+  z-index: 10;
+}
+
+.back-icon:hover {
+  color: #FFD700;
+}
+
+/* ---------------------------------- */
+/* 3. INPUT FIELD STYLING (MATCH LOGINPAGE.PHP) */
+/* ---------------------------------- */
+.input-box {
+  position: relative;
+  width: 100%;
+  height: 50px;
+  margin: 20px 0;
+}
+
+.input-box input {
+  width: 100%;
+  height: 100%;
+  /* Light grey input fields matching Loginpage.php */
+  background: #f8f8f8;
+  border: 2px solid #e5e5e5;
+  outline: none;
+  border-radius: 8px;
+  padding: 0 45px 0 15px;
+  font-size: 16px;
+  color: #333;
+  /* Add transition for smooth error color change */
+  transition: all 0.3s ease;
+}
+
+.input-box input:focus {
+  border-color: #FFD700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.input-box i {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000000;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+/* 🎯 ERROR STYLING FOR INPUT BOXES */
+.input-error input {
+  /* Change input border to red */
+  border: 2px solid #e74c3c !important;
+  /* Add a red glow */
+  box-shadow: 0 0 5px rgba(231, 76, 60, 0.7) !important;
+}
+
+.input-error i {
+  /* Change icon color to match the error */
+  color: #e74c3c !important;
+}
+
+/* ---------------------------------- */
+/* 4. BUTTON STYLING (UPDATED to match Loginpage.php) */
+/* ---------------------------------- */
+.btn {
+  width: 100%;
+  height: 45px;
+  /* Black button matching Loginpage.php theme */
+  background: #000000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  /* Gold text on black button */
+  color: #FFD700;
+  font-weight: 700;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background: #333333;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------------------------- */
+/* 5. LINK AND TOAST STYLING (UPDATED to match Loginpage.php) */
+/* ---------------------------------- */
+.register-link {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.register-link p {
+  color: #666;
+}
+
+.register-link a {
+  color: #000000;
+  text-decoration: none;
+  font-weight: 700;
+  transition: all 0.3s ease;
+}
+
+.register-link a:hover {
+  color: #FFD700;
+  text-decoration: underline;
+}
+
+/* Toast Alert Styling - Updated to match theme */
+.toast-alert {
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #000000; /* Black background */
+  color: #FFD700; /* Gold text */
+  padding: 16px 20px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  z-index: 1000;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-100%);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  border: 1px solid #FFD700;
+}
+
+.toast-alert.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-alert.error {
+  background-color: #000000;
+  border-left: 4px solid #FFD700;
+}
+
+.toast-alert.success {
+  background-color: #000000;
+  border-left: 4px solid #28a745; 
+}
+
+.toast-alert.info {
+  background-color: #000000;
+  border-left: 4px solid #FFD700;
+}
+
+#toast-message {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: #FFD700;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.toast-close:hover,
+.toast-close:focus {
+  opacity: 1;
+  outline: 2px solid #FFD700;
+}
+
+/* ---------------------------------- */
+/* 6. STEP 2 FORM CARDS STYLING (UPDATED to match theme) */
+/* ---------------------------------- */
+.hidden {
+  display: none !important;
+}
+
+.group-label {
+  margin-bottom: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #000000; /* Black text for labels */
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.options span {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #333; /* Dark text for options */
+}
+
+.options input[type="radio"],
+.options input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: #FFD700; /* Gold accent color */
+  transform: scale(1.1);
+}
+
+.options input[type="number"] {
+  padding: 8px 12px;
+  background: #f8f8f8;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.options input[type="number"]:focus {
+  border-color: #FFD700;
+  box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+#step2 {
+  padding-top: 20px;
+  border-top: 1px solid #e5e5e5;
+  margin-top: 20px;
+  animation: fadeIn 0.4s ease-in;
+}
+
+.form-card {
+  background: #ffffff;
+  margin-bottom: 15px;
+  color: #333;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e5e5e5;
+  transition: all 0.3s ease;
+}
+
+.form-card:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  border: 2px solid #FFD700;
+}
+
+.form-card .group-label {
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #000000;
+}
+
+.form-card .options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+}
+
+.form-card .options span {
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  color: #333;
+}
+
+.form-card .options input[type="radio"],
+.form-card .options input[type="checkbox"] {
+  margin-right: 8px;
+  accent-color: #FFD700;
+  transform: scale(1.1);
+}
+
+.form-card .options input[type="number"] {
+  background: #f8f8f8;
+  border: 2px solid #e5e5e5;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  width: 100%;
+  color: #333;
+}
+
+/* 🎯 ALERT BOX STYLES */
+.alert-box {
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  border: 1px solid #e5e5e5;
+}
+
+.error-alert {
+  background-color: #fce4e4;
+  color: #cc0000;
+  border-color: #fcc;
+}
+
+/* ---------------------------------- */
+/* 7. RESPONSIVE DESIGN */
+/* ---------------------------------- */
+/* Desktop Responsive Width */
+@media (min-width: 1024px) {
+  .wrapper {
+    width: 800px !important;
+  }
+}
+
+/* Tablet Responsive */
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px;
+    padding: 20px;
+  }
+  
+  .wrapper {
+    width: 100%;
+    max-width: 400px;
+    padding: 25px 30px;
+    margin: 0 auto;
+  }
+  
+  .wrapper h1 {
+    font-size: 1.8rem;
+  }
+  
+  .input-box {
+    height: 50px;
+    margin: 15px 0;
+  }
+  
+  .input-box input {
+    font-size: 16px;
+  }
+  
+  .btn {
+    height: 45px;
+    font-size: 16px;
+  }
+  
+  .toast-alert {
+    top: 80px;
+    left: 10px;
+    right: 10px;
+    max-width: none;
+    transform: translateY(-100%);
+  }
+  
+  .toast-alert.show {
+    transform: translateY(0);
+  }
+  
+  .form-card {
+    padding: 15px;
+  }
+  
+  .form-card .options {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .form-card .options input[type="number"] {
+    width: 100%;
+  }
+  
+  .back-icon {
+    display: none;
+  }
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  body {
+    padding-top: 70px;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  
+  .wrapper {
+    padding: 20px 25px;
+  }
+  
+  .wrapper h1 {
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+  }
+  
+  .input-box {
+    height: 45px;
+    margin: 12px 0;
+  }
+  
+  .input-box input {
+    font-size: 15px;
+  }
+  
+  .input-box i {
+    font-size: 18px;
+  }
+  
+  .btn {
+    height: 42px;
+    font-size: 15px;
+  }
+  
+  .register-link {
+    font-size: 13px;
+  }
+  
+  .form-card {
+    padding: 12px;
+  }
+  
+  .form-card .group-label {
+    font-size: 14px;
+  }
+  
+  .form-card .options span {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 360px) {
+  .wrapper {
+    padding: 18px 20px;
+  }
+  
+  .wrapper h1 {
+    font-size: 1.5rem;
+  }
+  
+  .input-box input {
+    font-size: 14px;
+  }
+  
+  .btn {
+    height: 40px;
+    font-size: 14px;
+  }
+  
+  .register-link {
+    font-size: 12px;
+  }
+}
+
+/* Landscape Mode */
+@media (max-height: 600px) and (orientation: landscape) {
+  body {
+    padding-top: 60px;
+    align-items: flex-start;
+    min-height: auto;
+  }
+  
+  .wrapper {
+    margin-top: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .input-box {
+    height: 45px;
+    margin: 12px 0;
+  }
+  
+  .wrapper h1 {
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+  }
+}
+
+/* Fix for autofill background color */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #f8f8f8 inset !important;
+  -webkit-text-fill-color: #333 !important;
+}

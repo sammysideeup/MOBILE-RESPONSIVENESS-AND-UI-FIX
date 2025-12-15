@@ -1,0 +1,432 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+/* ---------------------------------- */
+/* 1. BODY & BACKGROUND STYLING */
+/* ---------------------------------- */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    
+    /* White background matching Nonmember.php */
+    background-color: #ffffff; 
+    animation: fadeIn 0.8s ease-out forwards;
+    
+    position: relative; 
+    z-index: 0;
+}
+
+/* ---------------------------------- */
+/* 2. WRAPPER (LOGIN BOX) STYLING */
+/* ---------------------------------- */
+.wrapper {
+    width: 420px;
+    
+    /* White background matching Nonmember.php cards */
+    background: #ffffff; 
+    
+    color: #333;
+    padding: 30px 40px;
+    border-radius: 1rem;
+    /* Updated shadow to match Nonmember.php cards */
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
+    animation: slideUpAndFadeIn 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+    
+    z-index: 2; 
+    position: relative;
+    border: 1px solid #e5e5e5;
+    transition: all 0.3s ease;
+}
+
+.wrapper:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border: 2px solid #FFD700;
+}
+
+.wrapper h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #000000;
+    font-weight: 900;
+    position: relative;
+    padding-bottom: 15px;
+}
+
+.wrapper h1::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: #FFD700;
+    border-radius: 2px;
+}
+
+.input-box {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 20px 0;
+}
+
+.input-box input {
+    width: 100%;
+    height: 100%;
+    /* Light grey input fields */
+    background: #f8f8f8; 
+    border: 2px solid #e5e5e5;
+    outline: none;
+    border-radius: 8px;
+    padding: 0 45px 0 15px;
+    font-size: 16px;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+.input-box input:focus {
+    border-color: #FFD700;
+    box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+}
+
+.input-box i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000000; 
+    font-size: 20px;
+}
+
+.remember-forgot {
+    display: flex;
+    justify-content: flex-end; 
+    font-size: 14px;
+    margin: 15px 0 25px;
+}
+
+.remember-forgot a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.remember-forgot a:hover {
+    text-decoration: underline;
+    color: #FFD700;
+}
+
+.btn {
+    width: 100%;
+    height: 45px;
+    /* Black button matching Nonmember.php theme */
+    background: #000000; 
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    /* Gold text on black button */
+    color: #FFD700; 
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background: #333333;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.nonMember-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.nonMember-link p {
+    color: #666;
+}
+
+.nonMember-link a {
+    color: #000000;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.nonMember-link a:hover {
+    color: #FFD700;
+    text-decoration: underline;
+}
+
+/* Toast Alert Styling - Updated to match theme */
+.toast-alert {
+    position: fixed;
+    top: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #000000; /* Black background */
+    color: #FFD700; /* Gold text */
+    padding: 16px 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    max-width: 400px;
+    z-index: 1000;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 0;
+    transform: translateX(-50%) translateY(-100%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    border: 1px solid #FFD700;
+}
+
+.toast-alert.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}
+
+.toast-alert.error {
+    background-color: #000000;
+    border-left: 4px solid #FFD700;
+}
+
+#toast-message {
+    flex-grow: 1;
+    margin-right: 10px;
+}
+
+.toast-close {
+    background: none;
+    border: none;
+    color: #FFD700;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.toast-close:hover,
+.toast-close:focus {
+    opacity: 1;
+    outline: 2px solid #FFD700;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUpAndFadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0); 
+    }
+}
+
+/* Responsive Design - Mobile First */
+@media (max-width: 768px) {
+    body {
+        padding-top: 80px;
+        padding-left: 20px;
+        padding-right: 20px;
+        align-items: flex-start;
+        min-height: 100vh;
+    }
+    
+    .wrapper {
+        width: 100%;
+        max-width: 400px;
+        padding: 25px 30px;
+        margin: 0 auto;
+    }
+    
+    .wrapper h1 {
+        font-size: 1.8rem;
+        margin-bottom: 25px;
+    }
+    
+    .input-box {
+        height: 50px;
+        margin: 18px 0;
+    }
+    
+    .input-box input {
+        font-size: 16px;
+        padding: 0 45px 0 15px;
+    }
+    
+    .input-box i {
+        font-size: 20px;
+    }
+    
+    .btn {
+        height: 45px;
+        font-size: 16px;
+    }
+    
+    .toast-alert {
+        top: 90px;
+        left: 20px;
+        right: 20px;
+        max-width: none;
+        transform: translateY(-100%);
+    }
+    
+    .toast-alert.show {
+        transform: translateY(0);
+    }
+    
+    .nonMember-link {
+        font-size: 13px;
+    }
+    
+    .remember-forgot {
+        font-size: 13px;
+        margin: 15px 0 22px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding-top: 70px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    
+    .wrapper {
+        padding: 22px 25px;
+        border-radius: 12px;
+    }
+    
+    .wrapper h1 {
+        font-size: 1.6rem;
+        margin-bottom: 22px;
+    }
+    
+    .input-box {
+        height: 48px;
+        margin: 15px 0;
+    }
+    
+    .input-box input {
+        font-size: 15px;
+        padding: 0 40px 0 15px;
+    }
+    
+    .input-box i {
+        font-size: 18px;
+        right: 12px;
+    }
+    
+    .btn {
+        height: 44px;
+        font-size: 15px;
+    }
+    
+    .nonMember-link {
+        font-size: 12px;
+        margin-top: 18px;
+    }
+    
+    .remember-forgot {
+        font-size: 12px;
+        margin: 12px 0 20px;
+    }
+}
+
+@media (max-width: 360px) {
+    body {
+        padding-top: 65px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    
+    .wrapper {
+        padding: 20px;
+    }
+    
+    .wrapper h1 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+    }
+    
+    .input-box {
+        height: 46px;
+    }
+    
+    .input-box input {
+        font-size: 14px;
+    }
+    
+    .btn {
+        height: 42px;
+        font-size: 14px;
+    }
+    
+    .nonMember-link {
+        font-size: 11px;
+    }
+}
+
+/* Animation for mobile navbar */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Fix for mobile input zoom */
+@media screen and (max-width: 768px) {
+    input, select, textarea {
+        font-size: 16px !important;
+    }
+}
+
+/* Prevent horizontal scrolling */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Touch-friendly tap targets */
+@media (max-width: 768px) {
+    .btn, .remember-forgot a, .nonMember-link a {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .remember-forgot a {
+        padding: 8px 0;
+    }
+}
